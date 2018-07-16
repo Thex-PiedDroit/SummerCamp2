@@ -13,7 +13,17 @@ TagManager:
   - UI
   - 
   - 
-  - PostProcessing
+  - Sol
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - Decors
   - 
   - 
   - 
@@ -26,17 +36,7 @@ TagManager:
   - 
   - 
   - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
+  - Personnage
   m_SortingLayers:
   - name: Default
     uniqueID: 0
