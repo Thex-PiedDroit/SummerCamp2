@@ -5,9 +5,12 @@ public class PersonnageJoueur : MonoBehaviour
 {
 #region Variables (public)
 
+	public Rigidbody m_pMonRigidBody = null;
+
 	public float m_fPointsDeVie = 0.0f;
 
 	public float m_fVitesse = 0.0f;
+	public float m_fVitesseDeSaut = 0.0f;
 
 	#endregion
 
@@ -21,6 +24,7 @@ public class PersonnageJoueur : MonoBehaviour
 	private void Update()
 	{
 		BougerPersonnage();
+		Sauter();
 	}
 
 	private void BougerPersonnage()
@@ -35,9 +39,18 @@ public class PersonnageJoueur : MonoBehaviour
 			tDirection.Normalize();
 
 			Vector3 tDeplacement = tDirection * (m_fVitesse * Time.deltaTime);
-			transform.position += tDeplacement;
+			m_pMonRigidBody.MovePosition(transform.position + tDeplacement);
 
 			transform.forward = tDirection;
+		}
+	}
+
+	private void Sauter()
+	{
+		if (Input.GetButtonDown("Jump"))
+		{
+			Vector3 tSaut = Vector3.up * m_fVitesseDeSaut;
+			m_pMonRigidBody.AddForce(tSaut, ForceMode.Impulse);
 		}
 	}
 }
