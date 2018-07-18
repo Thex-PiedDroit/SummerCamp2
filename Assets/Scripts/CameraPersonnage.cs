@@ -5,10 +5,13 @@ public class CameraPersonnage : MonoBehaviour
 {
 #region Variables (public)
 
+	static public CameraPersonnage Instance = null;
+
 	public PersonnageJoueur m_pTarget = null;
 	public Transform m_pCameraTransform = null;
 
 	public float m_fDistanceDeSuivi = 0.0f;
+	public float m_fVitesseDeRotation = 0.0f;
 
 	#endregion
 
@@ -18,6 +21,22 @@ public class CameraPersonnage : MonoBehaviour
 
 	#endregion
 
+
+	private void Awake()
+	{
+		if (CameraPersonnage.Instance != null)
+		{
+			if (CameraPersonnage.Instance != this)
+			{
+				Debug.LogError("Attention, il y a deux CameraPersonnage dans la scene");
+				Destroy(this);
+			}
+
+			return;
+		}
+
+		CameraPersonnage.Instance = this;
+	}
 
 	private void Update()
 	{
@@ -32,10 +51,7 @@ public class CameraPersonnage : MonoBehaviour
 
 	private void SuivrePersonnage()
 	{
-		Vector3 tNouvellePositionPoint = m_pTarget.transform.position + Vector3.up;
-		transform.position = tNouvellePositionPoint;
-
-		Vector3 tNouvellePositionCamera = tNouvellePositionPoint - (m_pCameraTransform.forward * m_fDistanceDeSuivi);
+		Vector3 tNouvellePositionCamera = m_pTarget.transform.position + Vector3.up - (m_pCameraTransform.forward * m_fDistanceDeSuivi);
 		m_pCameraTransform.position = tNouvellePositionCamera;
 	}
 
@@ -44,22 +60,12 @@ public class CameraPersonnage : MonoBehaviour
 		float fSourisX = Input.GetAxis("Mouse X");
 
 		if (fSourisX != 0.0f)
-		{
-			Vector3 tRotation = new Vector3(0.0f, fSourisX, 0.0f);
-			transform.eulerAngles += tRotation;
-		}
+			transform.RotateAround(m_pTarget.transform.position, Vector3.up, fSourisX * (m_fVitesseDeRotation * Time.deltaTime));
 
 
 		float fSourisY = Input.GetAxis("Mouse Y");
 
 		if (fSourisY != 0.0f)
-		{
-			Vector3 tRotation = new Vector3(-fSourisY, 0.0f, 0.0f);
-
-			Vector3 tRotationSiAjoutee = transform.eulerAngles + tRotation;
-
-			if (tRotationSiAjoutee.x <= 55.0f && tRotationSiAjoutee.x >= 0.0f)
-				transform.eulerAngles = tRotationSiAjoutee;
-		}
+			transform.RotateAround(m_pTarget.transform.position, transform.right, -fSourisY * (m_fVitesseDeRotation * Time.deltaTime));
 	}
 }

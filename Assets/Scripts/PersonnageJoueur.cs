@@ -36,7 +36,13 @@ public class PersonnageJoueur : MonoBehaviour
 
 		if (tDirection != Vector3.zero)
 		{
-			tDirection.Normalize();
+			tDirection = CameraPersonnage.Instance.transform.TransformDirection(tDirection);
+			tDirection.y = 0.0f;
+
+			if (tDirection.sqrMagnitude != 0.0f)
+				tDirection.Normalize();
+			else
+				tDirection = transform.forward;
 
 			Vector3 tDeplacement = tDirection * (m_fVitesse * Time.deltaTime);
 			m_pMonRigidBody.MovePosition(transform.position + tDeplacement);
