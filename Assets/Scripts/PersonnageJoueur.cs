@@ -7,6 +7,8 @@ public class PersonnageJoueur : MonoBehaviour
 
 	public Rigidbody m_pMonRigidBody = null;
 
+	public Arme m_pArme = null;
+
 	public float m_fPointsDeVie = 0.0f;
 
 	public float m_fVitesse = 0.0f;
@@ -25,6 +27,7 @@ public class PersonnageJoueur : MonoBehaviour
 	{
 		BougerPersonnage();
 		Sauter();
+		Attaquer();
 	}
 
 	private void BougerPersonnage()
@@ -58,5 +61,11 @@ public class PersonnageJoueur : MonoBehaviour
 			Vector3 tSaut = Vector3.up * m_fVitesseDeSaut;
 			m_pMonRigidBody.AddForce(tSaut, ForceMode.Impulse);
 		}
+	}
+
+	private void Attaquer()
+	{
+		if (Input.GetButton("Fire1"))
+			m_pArme.Attaquer();
 	}
 }
