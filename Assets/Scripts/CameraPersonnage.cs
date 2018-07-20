@@ -8,7 +8,8 @@ public class CameraPersonnage : MonoBehaviour
 	static public CameraPersonnage Instance = null;
 
 	public PersonnageJoueur m_pTarget = null;
-	public Transform m_pCameraTransform = null;
+
+	public Camera m_pCamera = null;
 
 	public float m_fDistanceDeSuivi = 0.0f;
 	public float m_fVitesseDeRotation = 0.0f;
@@ -51,8 +52,8 @@ public class CameraPersonnage : MonoBehaviour
 
 	private void SuivrePersonnage()
 	{
-		Vector3 tNouvellePositionCamera = m_pTarget.transform.position + Vector3.up - (m_pCameraTransform.forward * m_fDistanceDeSuivi);
-		m_pCameraTransform.position = tNouvellePositionCamera;
+		Vector3 tNouvellePositionCamera = m_pTarget.transform.position + Vector3.up - (transform.forward * m_fDistanceDeSuivi);
+		transform.position = tNouvellePositionCamera;
 	}
 
 	private void TournerCamera()

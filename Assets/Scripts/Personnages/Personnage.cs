@@ -6,6 +6,7 @@ abstract public class Personnage : MonoBehaviour
 #region Variables (public)
 
 	public Arme m_pArme = null;
+	public Animator m_pAnimator = null;
 
 	public float m_fPointsDeVie = 0.0f;
 
