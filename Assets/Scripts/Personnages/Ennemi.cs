@@ -34,6 +34,9 @@ public class Ennemi : Personnage
 		// A partir d'ici, on est sûr qu'on a une cible
 
 		BougerPersonnage();
+
+		if (m_pNavMeshAgent.velocity == Vector3.zero)
+			Attaquer();
 	}
 
 	private void LateUpdate()
@@ -42,9 +45,13 @@ public class Ennemi : Personnage
 			AnimeMarche();
 	}
 
-	protected override void Attaquer()
+	override protected void Attaquer()
 	{
+		Vector3 tDirection = (m_pCible.transform.position - transform.position).normalized;
+		tDirection.y = 0.0f;
+		transform.forward = tDirection.normalized;
 
+		base.Attaquer();
 	}
 
 	protected override void BougerPersonnage()

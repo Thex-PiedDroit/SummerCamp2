@@ -22,5 +22,12 @@ abstract public class Personnage : MonoBehaviour
 
 
 	abstract protected void BougerPersonnage();
-	abstract protected void Attaquer();
+
+	/// <summary>
+	/// Lance l'attaque de mon arme si elle existe
+	/// </summary>
+	virtual protected void Attaquer()
+	{
+		m_pArme?.Attaquer();
+	}
 }
